@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.oc.hnapp.android.HNQueryTask;
 
@@ -24,6 +26,14 @@ public class MainActivity extends AppCompatActivity {
 
         _task = new HNQueryTask(adapter, 80, 1);
         _task.execute();
+
+        final ProgressBar progress = (ProgressBar) findViewById(R.id.progress);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                progress.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
